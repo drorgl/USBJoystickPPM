@@ -6,13 +6,21 @@ Buttons 7-12 for flight mode
 
 Additional buttons implementation incomplete.
 
+## Components
+- ATMega328
+- LCD 16x2
+- FrSky DHT
+- USB Host 2.0
+
 ## Configuration
 
-``` USBJoystickPPM.ino
+USBJoystickPPM.ino
+``` 
 #define PPM_PIN 9
 ```
 
-``` RCState.h
+RCState.h
+``` 
 const int MAX_VALUE = 2000; //max ppm value
 const int MIN_VALUE = 1000; //min ppm value
 const int FAIL_SAFE_VALUE = 950; //failsafe is set when communication with USB Joystick is lost (disconnected)
@@ -20,9 +28,14 @@ const int FAIL_SAFE_VALUE = 950; //failsafe is set when communication with USB J
 
 ## Credits
 TM1637 driver - https://github.com/avishorp/TM1637
+
 LCD Driver - https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library/
+
 FrSky Library - https://github.com/sgofferj/arduino-frsky - incomplete
+
 ArduinoRCLib PPM Library - http://sourceforge.net/p/arduinorclib/
+
+USB Host - https://github.com/felis/USB_Host_Shield_2.0
 
 
 
