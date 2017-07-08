@@ -1,5 +1,3 @@
-// LCDDisplay.h
-
 #ifndef _LEDDISPLAY_h
 #define _LEDDISPLAY_h
 
@@ -14,15 +12,8 @@
 TM1637Display lcd(4, 3);
 uint8_t lcddisplay[4];
 
-
-
-
 class LEDDisplay {
 private:
-	
-
-	
-
 	void display_rc(byte flight_mode, bool channel5, byte camera_mode, bool camera_auto_center) {
 		lcddisplay[0] = lcd.encodeDigit(flight_mode);
 		lcddisplay[1] = (channel5) ? SEG_A | SEG_G | SEG_D : 0;

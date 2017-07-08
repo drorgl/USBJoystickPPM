@@ -2,16 +2,17 @@
 #define __HIDJOYSTICKRPTPARSER_H__
 
 #include <usbhid.h>
-
 #include "RCState.h"
 
-struct GamePadEventData {
+struct GamePadEventData
+{
 	uint8_t X, Y, Z1, Z2, Rz;
 };
 
-class JoystickEvents {
-public:
-	RCState * rcState;
+class JoystickEvents
+{
+  public:
+	RCState *rcState;
 
 	virtual void OnGamePadChanged(const GamePadEventData *evt);
 	virtual void OnHatSwitch(uint8_t hat);
@@ -19,16 +20,17 @@ public:
 	virtual void OnButtonDn(uint8_t but_id);
 };
 
-#define RPT_GEMEPAD_LEN		5
+#define RPT_GEMEPAD_LEN 5
 
-class JoystickReportParser : public HIDReportParser {
+class JoystickReportParser : public HIDReportParser
+{
 	JoystickEvents *joyEvents;
 
 	uint8_t oldPad[RPT_GEMEPAD_LEN];
 	uint8_t oldHat;
 	uint16_t oldButtons;
 
-public:
+  public:
 	JoystickReportParser(JoystickEvents *evt, RCState *rcs);
 
 	virtual void Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf);

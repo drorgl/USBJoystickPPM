@@ -7,7 +7,6 @@
 #include <hiduniversal.h>
 #include <usbhub.h>
 
-// Satisfy IDE, which only needs to see the include statment in the ino.
 #ifdef dobogusinclude
 #include <spi4teensy3.h>
 #include <SPI.h>
@@ -31,24 +30,24 @@ FrSkyAccessor frsky_accessor;
 //LEDDisplay led_display;
 LCDDisplay lcd_display;
 
-void setup() {
+void setup()
+{
 	frsky_accessor.setup();
 	//led_display.setup();
 	lcd_display.setup();
 
-
 	Serial.begin(115200);
 #if !defined(__MIPSEL__)
-	while (!Serial); // Wait for serial port to connect - used on Leonardo, Teensy and other boards with built-in USB CDC serial connection
+	while (!Serial)
+		; // Wait for serial port to connect - used on Leonardo, Teensy and other boards with built-in USB CDC serial connection
 #endif
 	Serial.println("Start");
-
-	//delay(100);
 
 	auto usb_init = Usb.Init();
 	Serial.print("Init");
 	Serial.println(usb_init);
-	if (usb_init == -1) {
+	if (usb_init == -1)
+	{
 		Serial.println("OSC did not start.");
 		//led_display.display_oerr();
 		lcd_display.display_oerr();
@@ -56,41 +55,38 @@ void setup() {
 	}
 
 	delay(200);
-	if (!Hid.SetReportParser(0, &Joy)) {
-		ErrorMessage<uint8_t >(PSTR("SetReportParser"), 1);
+	if (!Hid.SetReportParser(0, &Joy))
+	{
+		ErrorMessage<uint8_t>(PSTR("SetReportParser"), 1);
 		//led_display.display_herr();
 		lcd_display.display_herr();
 		delay(2000);
 	}
 
-
 	rcs.init();
 	ppm_gen.init(PPM_PIN);
-
-
 }
 
 bool is_connected = true;
 
 int update_now = 0;
-//int usb_update = 0;
 
-void loop() {
+void loop()
+{
 	update_now++;
-	//usb_update++;
-	//if (usb_update > 0) {
+
 	ppm_gen.pause();
 	Usb.Task();
 	frsky_accessor.loop();
 
-	//Serial.println(Usb.getUsbTaskState());
-
 	if (Usb.getUsbTaskState() == USB_STATE_RUNNING)
 	{
-		if (is_connected == true) {
+		if (is_connected == true)
+		{
 			//already connected, do nothing
 		}
-		else {
+		else
+		{
 			is_connected = true;
 			rcs.is_connected = true;
 			Serial.println("joystick connected");
@@ -99,25 +95,27 @@ void loop() {
 			lcd_display.clear();
 		}
 	}
-	else {
+	else
+	{
 
-		if (is_connected == false) {
+		if (is_connected == false)
+		{
 			//already disconnected, do nothing
 		}
-		else {
+		else
+		{
 			is_connected = false;
 			rcs.is_connected = false;
 			Serial.println("joystick disconnected");
 			lcd_display.display_joystick_disconnected();
-			//led_display.display_clear();
 			delay(200);
 		}
 	}
 
-
-
-	if (update_now > 15) {
-		if (is_connected) {
+	if (update_now > 15)
+	{
+		if (is_connected)
+		{
 			lcd_display.display(rcs.flight_mode_code, rcs.channel5, (byte)rcs.camera_mode, rcs.auto_center);
 			lcd_display.print_all(&rcs);
 			lcd_display.display_rx_rssi(frsky_accessor.link_down);
@@ -126,14 +124,7 @@ void loop() {
 		update_now = 0;
 	}
 
-
 	ppm_gen.resume();
-
-	//usb_update = 0;
-//}
-
-//rcs.hat_tick();
-	//delay(10);
 
 	rcs.data_updated();
 	ppm_gen.set_value(0, rcs.roll);
@@ -146,11 +137,8 @@ void loop() {
 	ppm_gen.set_value(7, rcs.camera_yaw);
 	delay(10);
 
-	//delay(10);
-	if (is_connected) {
+	if (is_connected)
+	{
 		//led_display.display(rcs.flight_mode_code, rcs.channel5, (byte)rcs.camera_mode, rcs.auto_center);
 	}
-
-	//delay(20);
-	//delay(10);
 }

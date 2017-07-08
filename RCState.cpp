@@ -1,7 +1,3 @@
-// 
-// 
-// 
-
 #include "RCState.h"
 
 void RCState::init()
@@ -19,17 +15,13 @@ void RCState::init()
 
 	camera_pitch = CENTER_VALUE;
 	camera_yaw = CENTER_VALUE;
-
 }
-
-
 
 void RCState::data_updated() {
 	if (is_connected == false) {
 		throttle = FAIL_SAFE_VALUE;
 	}
 
-	//display
 #if 0
 	if (update_iteration > 0) {
 		update_iteration = 0;
@@ -113,7 +105,6 @@ void RCState::hat_changed(HAT_POSITION current_hat_position) {
 void RCState::hat_tick() {
 	//Serial.println("hat_tick");
 	/*if (!auto_center && (up_down_changed == 0 || left_right_changed == 0)) {
-
 		return;
 	}*/
 
@@ -145,8 +136,6 @@ void RCState::hat_tick() {
 	Serial.print((millis() - up_down_changed) / TIME_STEP_DIVIDER);
 
 	Serial.println("");*/
-
-	
 
 	switch (camera_mode) {
 	case CAMERA_MODES::exponent:

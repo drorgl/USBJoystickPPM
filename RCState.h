@@ -1,23 +1,23 @@
-// RCState.h
-
 #ifndef _RCSTATE_h
 #define _RCSTATE_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
+#include "arduino.h"
 #else
-	#include "WProgram.h"
+#include "WProgram.h"
 #endif
 
 #define MAX_BUTTONS 12
 
-enum class CAMERA_MODES {
+enum class CAMERA_MODES
+{
 	exponent,
 	slow,
 	max_min
 };
 
-enum class HAT_POSITION {
+enum class HAT_POSITION
+{
 	Center = 15,
 	Up = 0,
 	UpRight = 1,
@@ -29,20 +29,19 @@ enum class HAT_POSITION {
 	UpLeft = 7
 };
 
-
 class RCState
 {
-private:
+  private:
 	int update_iteration;
- public:
-	 const int MAX_VALUE = 2000;
-	 const int MIN_VALUE = 1000;
-	 const int FAIL_SAFE_VALUE = 950;
-	 const int TIME_STEP_DIVIDER = 10000;
-	 const int SLOW_INCREMENT = 1;
 
-	 const int CENTER_VALUE = ((MAX_VALUE - MIN_VALUE) / 2) + MIN_VALUE;
+  public:
+	const int MAX_VALUE = 2000;
+	const int MIN_VALUE = 1000;
+	const int FAIL_SAFE_VALUE = 950;
+	const int TIME_STEP_DIVIDER = 10000;
+	const int SLOW_INCREMENT = 1;
 
+	const int CENTER_VALUE = ((MAX_VALUE - MIN_VALUE) / 2) + MIN_VALUE;
 
 	void init();
 
@@ -53,10 +52,10 @@ private:
 
 	bool is_connected;
 
-	int pitch; //RC pitch
-	int roll; //RC roll
+	int pitch;	//RC pitch
+	int roll;	 //RC roll
 	int throttle; //throttle (should be reversed)
-	int yaw; //RC yaw
+	int yaw;	  //RC yaw
 
 	bool channel5; //toggle on button 2
 
@@ -72,13 +71,11 @@ private:
 	bool button_state[MAX_BUTTONS];
 	unsigned long button_state_changed[MAX_BUTTONS];
 	unsigned long button_state_change_time[MAX_BUTTONS];
-	
-	CAMERA_MODES camera_mode;//which camera mode to apply on camera yaw and pitch for each hat joystick action
-	bool auto_center;//should the camera return to center as soon as the sticks are left alone
-	int camera_yaw; //rotate camera left and right
-	int camera_pitch; //rotate camera up and down
+
+	CAMERA_MODES camera_mode; //which camera mode to apply on camera yaw and pitch for each hat joystick action
+	bool auto_center;		  //should the camera return to center as soon as the sticks are left alone
+	int camera_yaw;			  //rotate camera left and right
+	int camera_pitch;		  //rotate camera up and down
 };
 
-
 #endif
-
