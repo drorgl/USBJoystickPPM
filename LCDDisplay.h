@@ -1,5 +1,3 @@
-// LCDDisplay.h
-
 #ifndef _LCDDISPLAY_h
 #define _LCDDISPLAY_h
 
